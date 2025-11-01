@@ -2,12 +2,23 @@ import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  auth: {
+    useAPIKey: true,
+  },
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
   fields: [
     // Email added by default
     // Add more fields as needed
+    {
+      name: 'username',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'age',
+      type: 'number',
+    },
   ],
 }
