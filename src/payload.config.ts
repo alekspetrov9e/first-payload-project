@@ -31,6 +31,73 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
+  globals: [
+    {
+      slug: 'siteSettings',
+      fields: [
+        {
+          name: 'siteTitle',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'siteDescription',
+          type: 'textarea',
+          required: true,
+        },
+        {
+          name: 'contactEmail',
+          type: 'email',
+          required: true,
+        },
+        {
+          name: 'socialMediaLinks',
+          type: 'array',
+          fields: [
+            {
+              name: 'platform',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'url',
+              type: 'text',
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'maintenanceMode',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'defaultLanguage',
+          type: 'select',
+          options: [
+            { label: 'English', value: 'en' },
+            { label: 'Spanish', value: 'es' },
+            { label: 'French', value: 'fr' },
+          ],
+          defaultValue: 'en',
+        },
+        {
+          name: 'themeSettings',
+          type: 'group',
+          fields: [
+            {
+              name: 'primaryColor',
+              type: 'text',
+            },
+            {
+              name: 'fontFamily',
+              type: 'text',
+            },
+          ],
+        },
+      ],
+    },
+  ],
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder

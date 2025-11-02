@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  auth: true,
   fields: [
     {
       name: 'title',
@@ -24,6 +25,26 @@ export const Posts: CollectionConfig = {
       admin: {
         readOnly: true,
       },
+    },
+    {
+      name: 'publishedDate',
+      type: 'date',
+      required: true,
+    },
+    {
+      name: 'tags',
+      type: 'array',
+      fields: [
+        {
+          name: 'tag',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media',
     },
   ],
   hooks: {

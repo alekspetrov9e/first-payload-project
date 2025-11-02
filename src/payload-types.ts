@@ -88,8 +88,12 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    siteSettings: SiteSetting;
+  };
+  globalsSelect: {
+    siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -175,6 +179,14 @@ export interface Post {
   content: string;
   author?: (string | null) | User;
   createdAt: string;
+  publishedDate: string;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  featuredImage?: (string | null) | Media;
   updatedAt: string;
 }
 /**
@@ -313,6 +325,14 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   author?: T;
   createdAt?: T;
+  publishedDate?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  featuredImage?: T;
   updatedAt?: T;
 }
 /**
@@ -354,6 +374,58 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings".
+ */
+export interface SiteSetting {
+  id: string;
+  siteTitle: string;
+  siteDescription: string;
+  contactEmail: string;
+  socialMediaLinks?:
+    | {
+        platform: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  maintenanceMode?: boolean | null;
+  defaultLanguage?: ('en' | 'es' | 'fr') | null;
+  themeSettings?: {
+    primaryColor?: string | null;
+    fontFamily?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  siteDescription?: T;
+  contactEmail?: T;
+  socialMediaLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  maintenanceMode?: T;
+  defaultLanguage?: T;
+  themeSettings?:
+    | T
+    | {
+        primaryColor?: T;
+        fontFamily?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
