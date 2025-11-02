@@ -20,5 +20,20 @@ export const Users: CollectionConfig = {
       name: 'age',
       type: 'number',
     },
+    {
+      name: 'role',
+      type: 'select',
+      options: [
+        {
+          label: 'Admin',
+          value: 'admin',
+        },
+        {
+          label: 'Editor',
+          value: 'editor',
+        },
+      ],
+      required: true,
+    },
   ],
 }

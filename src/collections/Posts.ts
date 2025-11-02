@@ -1,8 +1,24 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, AccessArgs } from 'payload'
+import type { User } from '../payload-types'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
   auth: true,
+  access: {
+    create: ({ req }: AccessArgs) => {
+      const user = req.user as User | undefined
+      return user?.role === 'admin'
+    },
+    read: () => true,
+    update: ({ req }: AccessArgs) => {
+      const user = req.user as User | undefined
+      return user?.role === 'admin' || user?.role === 'editor'
+    },
+    delete: ({ req }: AccessArgs) => {
+      const user = req.user as User | undefined
+      return user?.role === 'admin'
+    },
+  },
   fields: [
     {
       name: 'title',
